@@ -33,8 +33,6 @@ My working hypothesis, to be validated in the first three weeks, not assumed, ha
 
 *I am holding fragmentation as a hypothesis, not a conclusion. Section 3 describes how I'd confirm it cheaply before spending engineering on anything.*
 
-**Alternative explanations, and where this stops being a systems problem.** I am deliberately not assuming the conversion decline was caused by delivery. Before committing engineering, I would discriminate between rival explanations: (1) **reputation spillover**, the delivery and service complaints leaking into reviews and deterring new buyers; (2) **availability**, certain products genuinely out of stock or pre-order only; (3) **traffic mix**, a campaign shifting the denominator so conversion rate falls even though the product did not change; (4) **commercial**, a competitor move, price change, or promotion ending; and (5) **checkout friction**, a recent UI/UX change (testable against the date conversion dipped). The diagnosis in Section 3 is built to tell these apart. Where the cause is ours (promise accuracy, availability data) we fix it; where it is commercial or a checkout-UX regression, I route it to the right owner rather than spend scarce engineering misdiagnosing it as a systems issue. The point is range with focus: rule out broadly, commit narrowly.
-
 ---
 
 ## 2. What I recommend (the first 90 days)
@@ -68,7 +66,7 @@ A disciplined sequence: **establish truth → diagnose → fix the highest-impac
 - **System-of-record / data-lineage map** (Appendix B), for each critical data element (available inventory, promised date, order status, actual delivery), which system is authoritative, who consumes it, and where they disagree. This directly attacks the trust problem.
 - **Stakeholder interviews** with Marketing, Operations, Support, and Engineering/Data, framed by **Jobs-to-be-Done** ("what are you judged on, where does the data lie to you?") and **5 Whys** to reach root cause rather than symptom.
 
-**Decide with data, prioritise transparently.** Score candidate fixes with **ICE/RICE**, Reach matters here because the gap hides inside specific regions and product lines. Aligning everyone on shared definitions *first* is what stops the loudest voice from steering the roadmap.
+**Decide with data, prioritise transparently.** Score candidate fixes with **ICE/RICE**, Reach matters here because the gap hides inside specific regions and product lines. Aligning everyone on shared definitions *first* is what stops the loudest voice from steering the roadmap. I also treat the conversion decline as potentially multi-causal and rule out rival explanations before committing engineering (see Appendix E).
 
 **Operate in the open.** Each quarter gets one business outcome; each sprint a clear objective toward it. Agile and reprioritised as discovery and the tech team's input simplify the path, but anchored to the customer-promise metric throughout.
 
@@ -83,7 +81,7 @@ A disciplined sequence: **establish truth → diagnose → fix the highest-impac
 
 ---
 
-*Appendices follow (excluded from page count): A: Order-lifecycle service blueprint · B: System-of-record map · C: Metric tree · D: 90-day plan on a page.*
+*Appendices follow (excluded from page count): A: Order-lifecycle service blueprint · B: System-of-record map · C: Metric tree · D: 90-day plan on a page · E: Alternative explanations and scope.*
 
 ---
 
@@ -166,3 +164,19 @@ flowchart TD
 | 1 | One trusted metric + clear diagnosis | Define & stand up OTIF from data warehouse; tag 40% ticket spike by reason code; segment gap by region & product type | Low (mostly analysis) |
 | 2 | One or two targeted fixes live | Promise reflects inventory/pre-order reality (rules-based); pre-order delay alerting; fix worst data discrepancy | Low–medium |
 | 3 | Ownership + shared truth + direction set | Assign owner of the promise metric; ship one shared dashboard; publish deferred multi-quarter unification roadmap | Low |
+
+---
+
+# Appendix E: Alternative explanations and scope
+
+I am deliberately not assuming the conversion decline was caused by delivery. The discovery in Section 3 is built to discriminate between rival explanations before any engineering is committed. The principle is range with focus: rule out broadly, commit narrowly. Where the cause is ours we fix it; where it is commercial or a checkout-UX regression, I route it to the right owner rather than spend scarce engineering misdiagnosing it as a systems problem.
+
+| Rival hypothesis | What it would look like | How I'd discriminate | Likely owner of the fix |
+|---|---|---|---|
+| Reputation spillover | Delivery/service complaints leaking into reviews and deterring new buyers | Correlate review sentiment/volume timing against the conversion dip | Systems / CX (fix the root delivery problem) |
+| Availability | Certain products genuinely out of stock or pre-order only | Segment conversion by stock-state (in-stock vs pre-order vs OOS) | Supply / Merchandising |
+| Traffic mix | A campaign shifted the denominator, so rate falls though the product did not change | Segment conversion by traffic source/campaign; inspect session composition | Marketing |
+| Commercial | A competitor move, price change, or promotion ending | Competitor and price-change review; check promo calendar against the dip | Commercial / Pricing |
+| Checkout friction | A recent UI/UX change raising abandonment | Funnel analysis; align the dip date with the release log | Web / Growth |
+
+*Scope line for the room: I own the diagnosis of the whole, but commit to build only the systems slice (promise accuracy, the single source of truth for order status/ETA, and the pre-order fixes). The rest I orchestrate by routing to the right owner with data.*
