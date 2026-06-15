@@ -25,7 +25,7 @@ My working hypothesis — to be validated in the first three weeks, not assumed 
 
 **2. There is no single trusted source of truth across the stack.** Orders flow Shopify → OMS → ERP → regional 3PL WMS → 3PL warehouse / last mile, and each team reads a different system. So the *same order* can look healthy to Operations and broken to the customer. This is why "teams disagree on which systems and metrics should be trusted" — they are each locally correct against different data. It also explains the stakeholder conflict: Marketing wants tighter promises to lift conversion; Operations wants looser promises to protect SLA. Both are optimising a local metric because **no one owns the end-to-end promise.**
 
-**3. Pre-orders and inventory inaccuracy corrupt the promise at its source.** An item shown "in stock" that isn't, or a single pre-order line that quietly holds an entire mixed order, will blow past the displayed timeline regardless of how fast the warehouse moves.
+**3. Pre-orders and inventory inaccuracy corrupt the promise at its source.** An item shown "in stock" that isn't, or a single pre-order line that quietly holds an entire mixed order under a default **ship-complete policy** (the whole order waits for its slowest line before anything ships), will blow past the displayed timeline regardless of how fast the warehouse moves. In other words, the bottleneck is order composition and fulfilment policy, not warehouse speed — another way internal metrics can look healthy while the customer's promise is missed.
 
 **The uncomfortable part — where I'd respectfully challenge leadership's framing:** "fragmented systems and processes" is a real symptom, but the deeper cause looks like an **ownership and definitions gap**, not just a technical one. No role today owns the end-to-end delivery promise or the single definition of "on time." Without that, the loudest team — not the data — sets the roadmap.
 
@@ -38,7 +38,7 @@ My working hypothesis — to be validated in the first three weeks, not assumed 
 A disciplined sequence: **establish truth → diagnose → fix the highest-impact slice → assign ownership.**
 
 **Month 1 — One trusted metric + diagnosis (mostly analysis, minimal engineering).**
-- Define and stand up a **North Star: Delivery Promise Reliability** — the % of orders delivered on or before the promised date, in full, without defect (industry shorthand: customer-promise **OTIF**). Build it from the **existing data warehouse**; do not introduce new systems.
+- Define and stand up a **North Star: Delivery Promise Reliability** — the % of orders delivered on or before the promised date, in full, without defect (industry shorthand: customer-promise **OTIF**). Build it from the **existing data warehouse**; do not introduce new systems. This is an **apex metric, not a replacement** — each department keeps the metrics it owns, but they are now understood as contributors that *roll up to and explain* the North Star rather than competing definitions of "good." What makes it trusted is a single agreed **definition** of "on time" (promised date vs. actual delivered date, from the customer's view — not an internal handoff) and a single agreed **data source**. See Appendix C for how each team's metric and source maps in.
 - **Categorise the 40% ticket spike by reason code.** This needs *zero* engineering and, within days, tells us whether the pain is timing, damage/defects, wrong items, or order-visibility. It can reframe the whole problem before we spend a sprint.
 - Segment the promise-vs-actual gap by **region** and **product type (in-stock vs pre-order)** to locate where the experience actually breaks.
 
@@ -124,7 +124,7 @@ flowchart TD
 
 | Critical data element | Authoritative system (likely) | Who consumes it | Where it diverges / risk |
 |---|---|---|---|
-| Available inventory (in-stock vs pre-order) | ERP / WMS | Shopify (promise), Marketing, Ops | Shopify may show stale/optimistic stock → false promise |
+| Available inventory (in-stock vs pre-order) | ERP / WMS | Shopify (to generate the checkout delivery promise), Marketing, Ops | Shopify may show stale/optimistic stock → false promise |
 | Promised delivery date | Shopify (display) | Customer, Support, Marketing | Often static/rules-of-thumb, not tied to real fulfillment state |
 | Order & fulfillment status | OMS / WMS | Ops, Support | Mixed in-stock + pre-order orders; status differs per system |
 | Actual delivered date + condition | 3PL / last-mile | (often no one, end to end) | The real customer truth — frequently not flowed back to a metric |
@@ -135,9 +135,22 @@ flowchart TD
 
 # Appendix C — Metric tree
 
+**The apex.** One customer-facing number everyone aligns to; departmental metrics roll up to and *explain* it.
+
 - **North Star (customer-facing, lagging):** Delivery Promise Reliability — % orders delivered on/before promised date, in full, without defect (customer-promise OTIF).
 - **Leading indicators:** promise-vs-actual gap (days); pre-order promise accuracy; inventory accuracy by system/region; % orders containing a pre-order line.
 - **Operational / diagnostic:** support tickets by reason code; pre-order delay alerts (act before the customer feels the slip); conversion by product stock-state.
+
+**How each department's metric feeds the apex — and from which source.** This is the wiring that turns competing numbers into one shared picture. (Source systems are the likely owners, to be confirmed in discovery.)
+
+| Department | Metric they own | Source system | How it rolls up to / explains OTIF |
+|---|---|---|---|
+| Marketing | Conversion by displayed delivery timeline; promise competitiveness | Shopify analytics + data warehouse | A wrong or over-conservative promise depresses conversion; explains conversion drops |
+| Operations / Fulfilment | On-time dispatch, pick-pack-ship cycle time, internal SLA | OMS / WMS | Internal fulfilment speed is *one input* to whether the customer promise is met (not the promise itself) |
+| Customer Support | Ticket volume by reason code; delivery-related contact rate | Ticketing tool (e.g. Zendesk) + data warehouse | Leading signal of promise failures customers actually feel; the fastest, cheapest diagnostic |
+| Supply / Inventory | Inventory accuracy; pre-order fill rate; stockout rate | ERP / WMS | Inaccurate stock = a false promise at the source; directly widens the gap |
+| Last-mile / 3PL | Actual delivered date; delivery success & defect rate | 3PL / last-mile feeds + data warehouse | The *actual* side of promise-vs-actual; the customer's ground truth |
+| Engineering / Data | Cross-system data latency; reconciliation discrepancies | Data warehouse / pipelines | Determines whether any of the above can be trusted at all — the precondition for the apex |
 
 ---
 
