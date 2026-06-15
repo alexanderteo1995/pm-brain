@@ -29,7 +29,11 @@ My working hypothesis, to be validated in the first three weeks, not assumed, ha
 
 **The uncomfortable part, where I'd respectfully challenge leadership's framing:** "fragmented systems and processes" is a real symptom, but the deeper cause looks like an **ownership and definitions gap**, not just a technical one. No role today owns the end-to-end delivery promise or the single definition of "on time." Without that, the loudest team, not the data, sets the roadmap.
 
+**Early external signal.** A quick scan of public customer channels (including Secretlab's own subreddit) corroborates several of these points: recurring posts cluster around (a) products arriving with issues or damage, (b) poor customer-service resolution, and (c) pre-order items holding up the rest of an order. This is qualitative and self-selected, not proof, but it independently agrees with both the case study's signals and the hypotheses above. It also surfaces one failure mode worth naming explicitly: **physical damage in transit.** That is captured by the "in full, without defect" leg of the North Star, but the fix lives in packaging and 3PL / last-mile handling, not in systems or data, an honest reminder that not all of this is a systems problem.
+
 *I am holding fragmentation as a hypothesis, not a conclusion. Section 3 describes how I'd confirm it cheaply before spending engineering on anything.*
+
+**Alternative explanations, and where this stops being a systems problem.** I am deliberately not assuming the conversion decline was caused by delivery. Before committing engineering, I would discriminate between rival explanations: (1) **reputation spillover**, the delivery and service complaints leaking into reviews and deterring new buyers; (2) **availability**, certain products genuinely out of stock or pre-order only; (3) **traffic mix**, a campaign shifting the denominator so conversion rate falls even though the product did not change; (4) **commercial**, a competitor move, price change, or promotion ending; and (5) **checkout friction**, a recent UI/UX change (testable against the date conversion dipped). The diagnosis in Section 3 is built to tell these apart. Where the cause is ours (promise accuracy, availability data) we fix it; where it is commercial or a checkout-UX regression, I route it to the right owner rather than spend scarce engineering misdiagnosing it as a systems issue. The point is range with focus: rule out broadly, commit narrowly.
 
 ---
 
@@ -45,6 +49,7 @@ A disciplined sequence: **establish truth → diagnose → fix the highest-impac
 **Month 2: One or two targeted, low-engineering fixes** aimed at wherever Month 1 says the gap is worst. Likely candidates:
 - Make the **checkout promise reflect reality**, inventory state and pre-order status, using simple rules, not a full available-to-promise engine.
 - **Pre-order delay alerting** so the relevant team intervenes *before* the customer feels the slip.
+- **Decouple pre-order from in-stock lines** (split shipment, or at minimum a clear choice at checkout) so a single pre-order item stops holding back the rest of an order. This is the ship-complete failure mode, corroborated by both the brief and public customer posts.
 - Fix the single worst data discrepancy feeding the promise.
 
 **Month 3: Governance and sequencing.**
