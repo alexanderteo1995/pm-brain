@@ -29,7 +29,7 @@ My working hypothesis, to be validated in the first three weeks, not assumed, ha
 
 **The uncomfortable part, where I'd respectfully challenge leadership's framing:** "fragmented systems and processes" is a real symptom, but the deeper cause looks like an **ownership and definitions gap**, not just a technical one. No role today owns the end-to-end delivery promise or the single definition of "on time." Without that, the loudest team, not the data, sets the roadmap.
 
-**Early external signal.** A quick scan of public customer channels (including Secretlab's own subreddit) corroborates several of these points: recurring posts cluster around (a) products arriving with issues or damage, (b) poor customer-service resolution, and (c) pre-order items holding up the rest of an order. This is qualitative and self-selected, not proof, but it independently agrees with both the case study's signals and the hypotheses above. It also surfaces one failure mode worth naming explicitly: **physical damage in transit.** That is captured by the "in full, without defect" leg of the North Star, but the fix lives in packaging and 3PL / last-mile handling, not in systems or data, an honest reminder that not all of this is a systems problem.
+*A scan of public customer channels (including Secretlab's own subreddit) corroborates these hypotheses and also surfaces issues that sit beyond systems, notably physical product damage in transit and customer-service resolution. What I looked at, what I took from it, and which parts are not systems problems is in Appendix F.*
 
 *I am holding fragmentation as a hypothesis, not a conclusion. Section 3 describes how I'd confirm it cheaply before spending engineering on anything.*
 
@@ -81,7 +81,7 @@ A disciplined sequence: **establish truth → diagnose → fix the highest-impac
 
 ---
 
-*Appendices follow (excluded from page count): A: Order-lifecycle service blueprint · B: System-of-record map · C: Metric tree · D: 90-day plan on a page · E: Alternative explanations and scope.*
+*Appendices follow (excluded from page count): A: Order-lifecycle service blueprint · B: System-of-record map · C: Metric tree · D: 90-day plan on a page · E: Alternative explanations and scope · F: External signal (customer-channel scan).*
 
 ---
 
@@ -180,3 +180,17 @@ I am deliberately not assuming the conversion decline was caused by delivery. Th
 | Checkout friction | A recent UI/UX change raising abandonment | Funnel analysis; align the dip date with the release log | Web / Growth |
 
 *Scope line for the room: I own the diagnosis of the whole, but commit to build only the systems slice (promise accuracy, the single source of truth for order status/ETA, and the pre-order fixes). The rest I orchestrate by routing to the right owner with data.*
+
+---
+
+# Appendix F: External signal (public customer-channel scan)
+
+A quick scan of public customer channels (including Secretlab's own subreddit) was used as a qualitative gut-check against the brief. It is self-selected and not representative, so it is treated as corroboration to be confirmed by Month 1 data, not as proof. Three themes recur:
+
+| Recurring theme | What it corroborates | Systems issue? |
+|---|---|---|
+| Products arriving with issues or damage | The "in full, without defect" leg of the North Star | Partly. Root fix is packaging and 3PL / last-mile handling, not data |
+| Poor customer-service resolution | The 40% ticket spike; likely linked to agents lacking a single trusted view of order status | Yes, ties to the no-single-source-of-truth thesis |
+| Pre-order items holding up the rest of an order | The ship-complete failure mode (Section 1, hypothesis 3) | Yes, fulfilment policy plus order composition |
+
+Takeaway: the brief's signals are echoed by real customers, and part of the pain (physical damage) sits outside systems entirely. An honest reminder that not all of this is a systems problem, and some fixes belong to other owners.
