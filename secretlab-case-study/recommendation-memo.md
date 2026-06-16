@@ -13,6 +13,8 @@ The delivery-experience problems are the visible symptom of two weak system back
 
 The core problem is **not delivery speed**. It is that what we lead customers to expect, both the **delivery commitment** (when and how an order arrives) and the **product information** they buy on, diverges from what they actually receive, and **no system owns the end-to-end truth**. The **OMS** closes the order and delivery-commitment gap: one source of truth for order status, availability-backed promising, and pre-order/mixed-order orchestration. The **PIM** closes the product-information gap: consistent, accurate product data across regions and channels, which reduces expectation-driven returns. This is why internal SLAs can improve while customers grow unhappier: we measure individual system legs, not the customer's end-to-end journey.
 
+A note on framing: although I anchor the recommendation on the OMS and PIM, I did not start from those systems and reason backward. I worked from the customer pain outward, and deliberately looked beyond OMS and PIM. A meaningful share of the problem sits outside both (covered at the end of Section 1), and the first 90 days are built to size that split with data before committing to any build.
+
 ---
 
 ## 1. What I believe is happening
@@ -28,6 +30,8 @@ Underneath the noise, the pain decomposes into **two system-shaped clusters**, w
 **On the 40% ticket spike, a deliberate correction.** Public customer signal (Appendix F) suggests the support pain skews toward **returns and faulty/damaged product**, not delivery delays. So I am *not* attributing the ticket spike primarily to delivery visibility. Some of it is the product-information/returns cluster, some is genuine physical damage (outside systems scope). The Month 1 **ticket reason-code categorisation** settles the split before we commit engineering.
 
 **The uncomfortable part, where I'd respectfully challenge leadership's framing:** "fragmented systems" is the symptom; the deeper gap is **ownership and definition**. No role owns the end-to-end experience or a single definition of "on time," so the loudest team, not the data, sets direction. That is the real reason the OMS and PIM rollouts exist, and the real risk is running them as IT projects disconnected from customer outcomes. I hold all of the above as **hypotheses to validate in weeks 1–3**, not conclusions.
+
+**What OMS and PIM will not fix.** A meaningful share of the pain sits outside both systems: physical damage and packaging quality, last-mile carrier performance, the returns (reverse-logistics) process itself, import duties and taxes, and checkout UX. These route to Operations, the 3PLs, and the Web/Commercial teams. The Month 1 reason-code split sizes how much of the problem is OMS/PIM-addressable versus not, so we never claim two systems fix everything.
 
 ---
 
