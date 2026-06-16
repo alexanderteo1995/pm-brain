@@ -53,15 +53,15 @@ The first 90 days are the **scoping and sequencing phase** of the OMS/PIM progra
 
 ## 3. How I would approach the problem
 
-This mirrors the lifecycle the role owns: **scope → translate → execute → adopt → improve.**
+I treat this role as the central bridge between business and technical teams: translate the customer pain into a sequenced systems program that engineering can build and the business will actually adopt. The approach rests on four principles, applied across the lifecycle the role owns (scope, translate, execute, adopt, improve).
 
-**Scope (weeks 1–3)** with three lightweight artifacts that double as requirements-gathering: the **order-lifecycle service blueprint** (Appendix D), the **system-of-record / data-lineage map** (Appendix E), and **stakeholder interviews** (Marketing, Ops, Support, Supply, Eng/Data) framed by **Jobs-to-be-Done** and **5 Whys**.
+**Measure before you build.** You cannot sequence or manage what you cannot see, so the first move is to establish one end-to-end measure (OTIF) and a single source of truth, not to start coding. I scope this with three lightweight artifacts that double as requirements-gathering: the order-lifecycle service blueprint (Appendix D) shows where the commitment is set and where it diverges from reality; the system-of-record / data-lineage map (Appendix E) shows which system is authoritative for each data element today and where the OMS/PIM should become the source of truth; and stakeholder interviews (Marketing, Ops, Support, Supply, Eng/Data), framed by **Jobs-to-be-Done** and **5 Whys**, surface each team's real requirements and where the data lies to them.
 
-**Translate** the diagnosis into prioritised OMS/PIM capabilities with acceptance criteria, scored with **ICE/RICE** (Reach matters: the pain hides in specific regions and product lines). I rule out rival explanations for the conversion drop before committing engineering (Appendix F).
+**Validate before you spend.** Engineering is the scarce resource, so I confirm or kill the biggest assumptions cheaply first, the Month 1 reason-code split and the region/stock-state segmentation, and rule out rival causes for the conversion drop (Appendix F) before committing a sprint. Requirements are then built from evidence, not opinion. Better three weeks being sure than three months building the wrong thing.
 
-**Bridge and adopt:** one agreed definition and metric ends the loudest-voice problem; training, comms, and a phased cutover are what make the systems adopted, not just delivered.
+**Sequence by leverage and dependency, not by who shouts loudest.** I translate the diagnosis into prioritised OMS/PIM capabilities with clear acceptance criteria, scored with **ICE/RICE** (Reach matters: the pain hides in specific regions and product lines), and phase them so the foundation, the order source of truth, lands before the capabilities that depend on it (Appendix C). Trade-offs are made explicit, not buried: split-shipment, for example, improves the experience but raises cost to serve, so it ships as a customer choice rather than a blanket default. Because the OMS and PIM are configure-and-integrate platforms, disciplined sequencing is also what keeps the program inside limited engineering capacity.
 
-**Improve continuously:** measure each phase against the end-to-end OTIF clock post-implementation and reprioritise as the technical team simplifies the path.
+**Anchor everything to the customer outcome, and to adoption.** A single agreed definition and metric ends the loudest-voice problem and gives every team one shared picture. A system that is delivered but not used is a failed project, so change management is owned from day one: who uses what, training, comms, and a phased cutover rather than a big-bang switch. After go-live, each phase is measured against the end-to-end OTIF clock and reprioritised as the technical team simplifies the path, which is how a one-off rollout becomes continuous improvement.
 
 ---
 
