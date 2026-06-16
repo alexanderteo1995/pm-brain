@@ -17,11 +17,11 @@ The core problem is **not delivery speed**. It is that what we lead customers to
 
 ## 1. What I believe is happening
 
-The key signal is a contradiction: **internal SLA improved, yet complaints rose, tickets are up 40%, and conversion fell.** When internal numbers improve while customers get louder, we are measuring **legs, not the journey**: each system tracks its slice, no one measures order-to-doorstep as the customer lives it. The pain splits into **two system-shaped clusters**, which is why the role rolls out two platforms.
+The key signal is a contradiction: **internal SLA improved, yet complaints rose, tickets are up 40%, and conversion fell.** When internal numbers improve while customers get louder, we are measuring **legs, not the journey**: each system tracks its slice, no one measures order-to-doorstep as the customer lives it. The pain splits into **two problems, each mapping to one of the platforms the role rolls out.**
 
-**Cluster 1, the delivery commitment is unbacked (OMS-shaped).** The checkout promise is not backed by reliable availability or status data, and the mechanism differs by market: Singapore lets the customer pick a date (generally kept), while the US and UK show an **estimated date range** via FedEx/UPS that depends on processing time and a last mile we do not control, so it slips. Pre-orders behave differently again: a single pre-order line under a default **ship-complete policy** holds an entire mixed order, so in-stock items wait on the slowest line. The result: unreliable estimates concentrated in **pre-orders and mixed orders**, and no source of truth for "where is my order." This is what an OMS fixes.
+**Problem 1, the delivery commitment is unbacked (an OMS problem).** The checkout promise is not backed by reliable availability or status data, and the mechanism differs by market: Singapore lets the customer pick a date (generally kept), while the US and UK show an **estimated date range** via FedEx/UPS that depends on processing time and a last mile we do not control, so it slips. Pre-orders behave differently again: a single pre-order line under a default **ship-complete policy** holds an entire mixed order, so in-stock items wait on the slowest line. The result: unreliable estimates concentrated in **pre-orders and mixed orders**, and no source of truth for "where is my order." This is what an OMS fixes.
 
-**Cluster 2, product information is inconsistent (PIM-shaped).** Inconsistent product data across regions and channels drives **expectation-driven returns** ("not what the page led me to expect"). A PIM fixes expectation accuracy, **not** physical damage in transit, which is a packaging and 3PL issue owned by Operations.
+**Problem 2, product information is inconsistent (a PIM problem).** Inconsistent product data across regions and channels drives **expectation-driven returns** ("not what the page led me to expect"). A PIM fixes expectation accuracy, **not** physical damage in transit, which is a packaging and 3PL issue owned by Operations.
 
 **A deliberate correction on the 40% tickets.** Public customer signal (Appendix A) skews toward **returns and faulty/damaged product**, not delivery delays, so I am *not* pinning the spike on delivery visibility. The Month 1 reason-code split sizes it before we commit engineering.
 
@@ -87,7 +87,7 @@ A quick scan of public customer channels (including Secretlab's own subreddit) w
 |---|---|---|
 | Products arriving with issues or damage | The "in full, without defect" leg of the North Star | Partly. Root fix is packaging and 3PL / last-mile handling, not systems |
 | Complaints about returns and faulty product | The 40% ticket spike skews here, toward returns and condition, not delivery delays | Split: expectation-driven returns → PIM; physical damage and returns process → Operations / 3PL |
-| Pre-order items holding up the rest of an order | The ship-complete failure mode (Section 1, Cluster 1) | Yes: an OMS-shaped gap (fulfilment policy plus order composition) |
+| Pre-order items holding up the rest of an order | The ship-complete failure mode (Section 1, Problem 1) | Yes: an OMS problem (fulfilment policy plus order composition) |
 
 Takeaway: the brief's signals are echoed by real customers, and the support pain skews toward returns and damage rather than delivery delays. A useful correction: the ticket spike is largely the PIM/returns cluster and physical handling, not delivery visibility, and the reason-code split in Month 1 confirms the proportions before any engineering is committed.
 
