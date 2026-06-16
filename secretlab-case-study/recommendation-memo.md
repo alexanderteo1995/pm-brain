@@ -9,78 +9,69 @@
 
 ## Recommendation up front
 
-The delivery-experience problems are the visible symptom of two weak system backbones: **order management (OMS)** and **product information (PIM)**, the two initiatives this role is mandated to own. I would **not** attempt a big-bang rollout of either in the first quarter. Instead, the first 90 days should **scope, diagnose, and sequence** the OMS upgrade and PIM rollout around the highest-impact customer pain, establish **one end-to-end measure** of the experience, and ship **one or two quick wins** that do not need the full platform, so the build that follows is targeted, adopted, and measurable.
+The delivery-experience problems are the visible symptom of two weak system backbones, **order management (OMS)** and **product information (PIM)**, the two initiatives this role owns. I would **not** big-bang either in the first quarter. The first 90 days should **scope, diagnose, and sequence** the OMS upgrade and PIM rollout around the highest-impact pain, establish **one end-to-end measure**, and ship **one or two quick wins** that do not need the full platform, so the build that follows is targeted, adopted, and measurable.
 
-The core problem is **not delivery speed**. It is that what we lead customers to expect, both the **delivery commitment** (when and how an order arrives) and the **product information** they buy on, diverges from what they actually receive, and **no system owns the end-to-end truth**. The **OMS** closes the order and delivery-commitment gap: one source of truth for order status, availability-backed promising, and pre-order/mixed-order orchestration. The **PIM** closes the product-information gap: consistent, accurate product data across regions and channels, which reduces expectation-driven returns. This is why internal SLAs can improve while customers grow unhappier: we measure individual system legs, not the customer's end-to-end journey.
-
-A note on framing: although I anchor the recommendation on the OMS and PIM, I did not start from those systems and reason backward. I worked from the customer pain outward, and deliberately looked beyond OMS and PIM. A meaningful share of the problem sits outside both (covered at the end of Section 1), and the first 90 days are built to size that split with data before committing to any build.
+The core problem is **not delivery speed**. It is that what we lead customers to expect, both the **delivery commitment** (OMS) and the **product information** they buy on (PIM), diverges from what they receive, and **no system owns the end-to-end truth**, so internal SLAs improve while customers grow unhappier. I anchor on OMS/PIM but reasoned from the customer pain outward, not from the systems back: a meaningful share of the problem sits outside both (see end of Section 1), and the 90 days size that split before any build.
 
 ---
 
 ## 1. What I believe is happening
 
-The most important signal in the brief is a contradiction: **internal delivery SLA metrics improved, yet complaints rose, support tickets are up 40%, and conversion fell.** When internal numbers improve while customers get louder, we are almost always measuring **legs, not the journey**: each system tracks its own slice while no one measures order-placed-to-delivered as the customer experiences it.
+The key signal is a contradiction: **internal SLA improved, yet complaints rose, tickets are up 40%, and conversion fell.** When internal numbers improve while customers get louder, we are measuring **legs, not the journey**: each system tracks its slice, no one measures order-to-doorstep as the customer lives it. The pain splits into **two system-shaped clusters**, which is why the role rolls out two platforms.
 
-Underneath the noise, the pain decomposes into **two system-shaped clusters**, which is exactly why the role is mandated to roll out two platforms.
+**Cluster 1, the delivery commitment is unbacked (OMS-shaped).** The checkout promise is not backed by reliable availability or status data, and the mechanism differs by market: Singapore lets the customer pick a date (generally kept), while the US and UK show an **estimated date range** via FedEx/UPS that depends on processing time and a last mile we do not control, so it slips. Pre-orders behave differently again: a single pre-order line under a default **ship-complete policy** holds an entire mixed order, so in-stock items wait on the slowest line. The result: unreliable estimates concentrated in **pre-orders and mixed orders**, and no source of truth for "where is my order." This is what an OMS fixes.
 
-**Cluster 1: the delivery commitment is unbacked (an OMS-shaped gap).** What we promise at checkout is not backed by reliable availability or status data, and the mechanism differs by market. In Singapore the customer selects a specific delivery date that is generally kept. In the US and UK, checkout instead shows an **estimated delivery date range** (for example, "Receive by estimated 18 to 23 June") tied to a shipping tier and fulfilled by FedEx/UPS, an estimate that depends on both order-processing time and a carrier last mile we do not fully control, so it can slip. The checkout itself flags that priority processing applies to **in-stock** items, which means pre-orders behave differently: a single **pre-order line under a default ship-complete policy** can hold an entire mixed order, so in-stock items wait on the slowest line. The result: estimates that slip or cannot be trusted, concentrated in **pre-orders and mixed orders**, and no single source of truth for "where is my order." This is what an OMS exists to fix.
+**Cluster 2, product information is inconsistent (PIM-shaped).** Inconsistent product data across regions and channels drives **expectation-driven returns** ("not what the page led me to expect"). A PIM fixes expectation accuracy, **not** physical damage in transit, which is a packaging and 3PL issue owned by Operations.
 
-**Cluster 2: product information is inconsistent (a PIM-shaped gap).** Inconsistent or inaccurate product data across regions and channels feeds **expectation-driven returns** ("not what the page led me to expect"). This is what a PIM exists to fix. The honest boundary: a PIM addresses expectation accuracy, **not** physical damage in transit, which is a packaging and 3PL-handling problem owned by Operations.
+**A deliberate correction on the 40% tickets.** Public customer signal (Appendix A) skews toward **returns and faulty/damaged product**, not delivery delays, so I am *not* pinning the spike on delivery visibility. The Month 1 reason-code split sizes it before we commit engineering.
 
-**On the 40% ticket spike, a deliberate correction.** Public customer signal (Appendix A) suggests the support pain skews toward **returns and faulty/damaged product**, not delivery delays. So I am *not* attributing the ticket spike primarily to delivery visibility. Some of it is the product-information/returns cluster, some is genuine physical damage (outside systems scope). The Month 1 **ticket reason-code categorisation** settles the split before we commit engineering.
-
-**The uncomfortable part, where I'd respectfully challenge leadership's framing:** "fragmented systems" is the symptom; the deeper gap is **ownership and definition**. No role owns the end-to-end experience or a single definition of "on time," so the loudest team, not the data, sets direction. That is the real reason the OMS and PIM rollouts exist, and the real risk is running them as IT projects disconnected from customer outcomes. I hold all of the above as **hypotheses to validate in weeks 1–3**, not conclusions.
-
-**What OMS and PIM will not fix.** A meaningful share of the pain sits outside both systems: physical damage and packaging quality, last-mile carrier performance, the returns (reverse-logistics) process itself, import duties and taxes, and checkout UX. These route to Operations, the 3PLs, and the Web/Commercial teams. The Month 1 reason-code split sizes how much of the problem is OMS/PIM-addressable versus not, so we never claim two systems fix everything.
+**The challenge, and the boundary.** "Fragmented systems" is the symptom; the deeper gap is **ownership and definition**, no role owns the end-to-end experience or a single definition of "on time," so the loudest team sets direction. That is why OMS/PIM exist, and the risk is running them as IT projects detached from customer outcomes. They will not fix everything: physical damage, last-mile performance, the returns process, duties/taxes, and checkout UX route to Operations, the 3PLs, and Web/Commercial. I hold all of this as **hypotheses to validate in weeks 1–3**, not conclusions.
 
 ---
 
 ## 2. What I recommend (the first 90 days)
 
-The first 90 days are the **scoping and sequencing phase** of the OMS and PIM program, not a big-bang rollout. The sequence: **measure and diagnose → translate into a prioritised systems backlog → ship quick wins → sequence the phased rollout with a change-management plan.**
+The first 90 days are the **scoping and sequencing phase** of the OMS/PIM program, not a big-bang: **measure and diagnose → translate into a prioritised backlog → ship quick wins → sequence the rollout with a change plan.**
 
-**Month 1: Establish the measure and diagnose (mostly analysis, minimal engineering).**
-- Stand up the **end-to-end North Star** (Delivery Promise Reliability, the customer-promise **OTIF**) from the **existing data warehouse**, and decompose the order-to-doorstep clock **by leg and region** to see where time and variance actually accrue (Appendix B).
-- **Categorise the 40% ticket spike by reason code** (zero engineering) to split delivery-status vs returns vs damage.
-- Segment the gap by **region, product type (in-stock vs pre-order), and stock-state** to locate the worst pain.
+**Month 1, measure and diagnose (mostly analysis).**
+- Stand up the **end-to-end North Star** (customer-promise **OTIF**) from the existing data warehouse; decompose the order-to-doorstep clock by leg and region (Appendix B).
+- **Categorise the 40% tickets by reason code** (zero engineering) to split delivery vs returns vs damage.
+- Segment the gap by region, product type, and stock-state to locate the worst pain.
 
-**Month 2: Quick wins now, scope the platforms in parallel.**
-- Quick wins that do **not** need the full platform: make the **checkout commitment honest** for pre-order and mixed orders (rules-based, show an updating window rather than a false precise date), **decouple in-stock from pre-order lines**, add **proactive delay comms** for pre-orders and mixed orders, and correct the **worst product-data inaccuracies** feeding the storefront.
-- In parallel, **translate the diagnosis into prioritised requirements** for **OMS phase 1** (single source of truth for order status + availability-backed promising) and **PIM phase 1** (master product data for top SKUs and regions). This is the business-to-technical translation the role owns.
+**Month 2, quick wins now, scope platforms in parallel.**
+- Quick wins without the full platform: make the **checkout commitment honest** for pre-order/mixed orders, **decouple in-stock from pre-order lines**, add **proactive delay comms**, and fix the worst product-data inaccuracies.
+- In parallel, **translate the diagnosis into phase-1 requirements** for the OMS (order-status source of truth + availability-backed promising) and PIM (master data for top SKUs/regions).
 
-**Month 3: Sequence, govern, and plan adoption.**
-- Lock the **phased OMS/PIM rollout roadmap** sequenced by customer impact (Appendix C), each phase tied to a business outcome and the OTIF measure, not to go-live.
-- Stand up **one shared dashboard** as the interim single source of truth and **assign ownership** of the end-to-end metric (ends the "whose number is right" fight).
-- Define the **change-management and adoption plan** (who uses what, training, phased cutover) and the **continuous-improvement loop** that measures the rollout against customer outcomes post-implementation.
+**Month 3, sequence, govern, adopt.**
+- Lock the **phased OMS/PIM roadmap** by customer impact (Appendix C), each phase tied to OTIF, not go-live.
+- Stand up **one shared dashboard** and **assign metric ownership** (ends the "whose number is right" fight).
+- Define the **change-management/adoption plan** and the **continuous-improvement loop**.
 
-**Explicitly NOT in the first 90 days** (and why): a big-bang OMS or PIM cutover, perfect inventory accuracy, re-doing 3PL integrations, fixing physical damage/packaging (Operations), or redesigning reverse logistics (routed; the OMS can orchestrate returns in a later phase). Each would consume limited engineering for no near-term customer impact, and the scoping work is what makes the eventual build cheaper and safer.
+**Explicitly not now:** a big-bang cutover, perfect inventory accuracy, re-doing 3PL integrations, fixing damage/packaging (Operations), or redesigning reverse logistics. Each burns limited engineering for no near-term impact.
 
 ---
 
 ## 3. How I would approach the problem
 
-This mirrors the project lifecycle the role owns: **scope → translate → execute → adopt → improve.**
+This mirrors the lifecycle the role owns: **scope → translate → execute → adopt → improve.**
 
-**Scope through discovery (weeks 1–3).** Three lightweight artifacts that double as requirements-gathering for the OMS/PIM:
-- **Order-lifecycle service blueprint** (Appendix D): where the commitment is set and where it diverges from reality.
-- **System-of-record / data-lineage map** (Appendix E): which system is authoritative for each data element today, and where the OMS/PIM should become the source of truth.
-- **Stakeholder interviews** (Marketing, Operations, Support, Supply, Engineering/Data) framed by **Jobs-to-be-Done** and **5 Whys**, to reach root cause and surface each team's real requirements.
+**Scope (weeks 1–3)** with three lightweight artifacts that double as requirements-gathering: the **order-lifecycle service blueprint** (Appendix D), the **system-of-record / data-lineage map** (Appendix E), and **stakeholder interviews** (Marketing, Ops, Support, Supply, Eng/Data) framed by **Jobs-to-be-Done** and **5 Whys**.
 
-**Translate business needs into a prioritised systems backlog.** Turn the diagnosis into OMS/PIM capabilities with clear acceptance criteria, scored with **ICE/RICE** (Reach matters: the pain hides inside specific regions and product lines). I treat the conversion decline as potentially multi-causal and rule out rival explanations before committing engineering (Appendix F).
+**Translate** the diagnosis into prioritised OMS/PIM capabilities with acceptance criteria, scored with **ICE/RICE** (Reach matters: the pain hides in specific regions and product lines). I rule out rival explanations for the conversion drop before committing engineering (Appendix F).
 
-**Bridge stakeholders and manage change.** A single agreed definition and metric ends the loudest-voice problem; a phased rollout with training, comms, and a clear cutover plan is what makes the new systems actually adopted, not just delivered.
+**Bridge and adopt:** one agreed definition and metric ends the loudest-voice problem; training, comms, and a phased cutover are what make the systems adopted, not just delivered.
 
-**Improve continuously.** Each phase is measured against the end-to-end OTIF clock post-implementation and reprioritised as the technical team's input simplifies the path, anchored to the customer outcome throughout.
+**Improve continuously:** measure each phase against the end-to-end OTIF clock post-implementation and reprioritise as the technical team simplifies the path.
 
 ---
 
 ## Key assumptions & risks
 
-- **Assumption:** the OMS is being **upgraded** (not greenfield) and the PIM is a **new rollout**; both can be phased as configure-and-integrate work rather than bespoke builds, which is what keeps them feasible under limited engineering.
-- **Assumption:** the data warehouse holds order and delivery timestamps sufficient to reconstruct the end-to-end clock. If not, the first sprint instruments this, it is the prerequisite for everything else.
-- **Risk:** the OMS/PIM rollout becomes a big-bang IT project disconnected from customer pain. Mitigation: sequence every phase by customer impact and tie it to the OTIF measure, not to go-live.
-- **Risk:** new systems are delivered but not adopted. Mitigation: a change-management plan (training, comms, phased cutover) owned from day one.
-- **Risk:** committing to a root cause too early, or over-attributing the ticket spike to delivery. Mitigation: the weeks 1–3 diagnosis and the reason-code split confirm or kill each hypothesis before engineering spend.
+- **Assumption:** the OMS is **upgraded** (not greenfield) and the PIM is a **new rollout**; both phase as configure-and-integrate work, which keeps them feasible under limited engineering.
+- **Assumption:** the data warehouse holds enough order/delivery timestamps to reconstruct the end-to-end clock; if not, sprint one instruments it.
+- **Risk:** the rollout becomes a big-bang IT project. *Mitigation:* sequence by customer impact, tie to OTIF, not go-live.
+- **Risk:** systems delivered but not adopted. *Mitigation:* change-management owned from day one.
+- **Risk:** committing to a root cause too early. *Mitigation:* the weeks 1–3 diagnosis and reason-code split confirm or kill each hypothesis first.
 
 ---
 
