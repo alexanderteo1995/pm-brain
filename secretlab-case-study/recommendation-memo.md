@@ -21,7 +21,7 @@ The most important signal in the brief is a contradiction: **internal delivery S
 
 Underneath the noise, the pain decomposes into **two system-shaped clusters**, which is exactly why the role is mandated to roll out two platforms.
 
-**Cluster 1: the delivery commitment is unbacked (an OMS-shaped gap).** What we promise at checkout is not backed by reliable availability or status data, and the mechanism even differs by region. In Singapore the customer selects a real, specific date that is generally kept. In export markets (e.g. Korea via DHL Express, "3 business days") the figure is a **carrier transit estimate for one leg**, not the full order-to-doorstep journey, and it depends on a 3PL last mile we do not fully control. Worse, a single **pre-order line under a default ship-complete policy** holds an entire mixed order, so in-stock items wait on the slowest line. The result: missed or unknowable commitments, concentrated in **export markets and pre-orders**, and no single source of truth for "where is my order." This is what an OMS exists to fix.
+**Cluster 1: the delivery commitment is unbacked (an OMS-shaped gap).** What we promise at checkout is not backed by reliable availability or status data, and the mechanism differs by market. In Singapore the customer selects a specific delivery date that is generally kept. In the US and UK, checkout instead shows an **estimated delivery date range** (for example, "Receive by estimated 18 to 23 June") tied to a shipping tier and fulfilled by FedEx/UPS, an estimate that depends on both order-processing time and a carrier last mile we do not fully control, so it can slip. The checkout itself flags that priority processing applies to **in-stock** items, which means pre-orders behave differently: a single **pre-order line under a default ship-complete policy** can hold an entire mixed order, so in-stock items wait on the slowest line. The result: estimates that slip or cannot be trusted, concentrated in **pre-orders and mixed orders**, and no single source of truth for "where is my order." This is what an OMS exists to fix.
 
 **Cluster 2: product information is inconsistent (a PIM-shaped gap).** Inconsistent or inaccurate product data across regions and channels feeds **expectation-driven returns** ("not what the page led me to expect"). This is what a PIM exists to fix. The honest boundary: a PIM addresses expectation accuracy, **not** physical damage in transit, which is a packaging and 3PL-handling problem owned by Operations.
 
@@ -41,7 +41,7 @@ The first 90 days are the **scoping and sequencing phase** of the OMS and PIM pr
 - Segment the gap by **region, product type (in-stock vs pre-order), and stock-state** to locate the worst pain.
 
 **Month 2: Quick wins now, scope the platforms in parallel.**
-- Quick wins that do **not** need the full platform: make the **checkout commitment honest** for pre-order and mixed orders (rules-based, show an updating window rather than a false precise date), **decouple in-stock from pre-order lines**, add **proactive delay comms** for export and pre-orders, and correct the **worst product-data inaccuracies** feeding the storefront.
+- Quick wins that do **not** need the full platform: make the **checkout commitment honest** for pre-order and mixed orders (rules-based, show an updating window rather than a false precise date), **decouple in-stock from pre-order lines**, add **proactive delay comms** for pre-orders and mixed orders, and correct the **worst product-data inaccuracies** feeding the storefront.
 - In parallel, **translate the diagnosis into prioritised requirements** for **OMS phase 1** (single source of truth for order status + availability-backed promising) and **PIM phase 1** (master product data for top SKUs and regions). This is the business-to-technical translation the role owns.
 
 **Month 3: Sequence, govern, and plan adoption.**
@@ -203,7 +203,7 @@ The rollout is phased so each step closes a diagnosed pain and is measured again
 | Phase | System | Capability | Customer pain it closes | Why this order |
 |---|---|---|---|---|
 | 1 | OMS | Single source of truth for order + fulfilment status | "Where is my order"; CS and customers cannot get certainty | Foundation the shared dashboard and every later phase depend on |
-| 1 | OMS | Availability-backed (ATP) promising for pre-order/mixed orders | False or unknowable delivery commitments; ship-complete holds | Highest-acuity delivery pain; concentrated in export + pre-orders |
+| 1 | OMS | Availability-backed (ATP) promising for pre-order/mixed orders | Delivery estimates that slip or cannot be trusted; ship-complete holds | Highest-acuity delivery pain; concentrated in pre-orders and mixed orders |
 | 1 | PIM | Master product data for top SKUs and regions | Expectation-driven returns from inconsistent product info | Cuts the returns slice of the 40% ticket spike |
 | 2 | OMS | Fulfilment orchestration (split shipment, regional carrier logic) | In-stock items held by pre-order lines; region-specific promises | Builds on the phase-1 status + ATP foundation |
 | 2 | PIM | Channel/region content syndication | Inconsistent listings across markets feeding wrong expectations | Extends accurate data once the master record exists |
