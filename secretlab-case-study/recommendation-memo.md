@@ -89,7 +89,7 @@ A quick scan of public customer channels (including Secretlab's own subreddit) w
 | Complaints about returns and faulty product | The 40% ticket spike skews here, toward returns and condition, not delivery delays | Split: expectation-driven returns → PIM; physical damage and returns process → Operations / 3PL |
 | Pre-order items holding up the rest of an order | The ship-complete failure mode (Section 1, Problem 1) | Yes: an OMS problem (fulfilment policy plus order composition) |
 
-Takeaway: the brief's signals are echoed by real customers, and the support pain skews toward returns and damage rather than delivery delays. A useful correction: the ticket spike is largely the PIM/returns cluster and physical handling, not delivery visibility, and the reason-code split in Month 1 confirms the proportions before any engineering is committed.
+Takeaway: the brief's signals are echoed by real customers, and the support pain skews toward returns and damage rather than delivery delays. A useful correction: the ticket spike is largely the PIM/returns problem and physical handling, not delivery visibility, and the reason-code split in Month 1 confirms the proportions before any engineering is committed.
 
 ---
 
